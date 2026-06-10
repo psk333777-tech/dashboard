@@ -544,7 +544,12 @@ function populateMonthSelects() {
     el.innerHTML = (id==='reg-month-filter' ? '<option value="">전체</option>' : '') +
       months.map(m=>`<option value="${m}">${monthLabel(m)}</option>`).join('');
     if (months.includes(cur)) el.value = cur;
-    else if (id!=='reg-month-filter') el.value = months[months.length-1];
+    else if (id!=='reg-month-filter') {
+      // 데이터가 있는 가장 최신 월로 기본 설정
+      const dataMonths = getMonthsInData();
+      if (dataMonths.length > 0) el.value = dataMonths[dataMonths.length-1];
+      else el.value = months[months.length-1];
+    }
   });
 
   // year selects
